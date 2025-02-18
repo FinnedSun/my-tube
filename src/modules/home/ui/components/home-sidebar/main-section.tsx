@@ -14,8 +14,6 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useAuth, useClerk } from "@clerk/nextjs"
-import { use } from "react"
-import { auth } from "@clerk/nextjs/server"
 
 const items = [
   {
