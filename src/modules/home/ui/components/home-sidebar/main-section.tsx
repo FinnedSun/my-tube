@@ -13,6 +13,9 @@ import {
   PlaySquareIcon
 } from "lucide-react"
 import Link from "next/link"
+import { useAuth, useClerk } from "@clerk/nextjs"
+import { use } from "react"
+import { auth } from "@clerk/nextjs/server"
 
 const items = [
   {
@@ -24,6 +27,7 @@ const items = [
     title: "Subscription",
     href: "/feed/subscription",
     icon: PlaySquareIcon,
+    auth: true,
   },
   {
     title: "Tredding",
@@ -33,6 +37,8 @@ const items = [
 ]
 
 export const MainSection = () => {
+  const { isSignedIn } = useAuth()
+  const clerk = useClerk()
   return (
     <SidebarGroup>
       <SidebarGroupContent>
@@ -45,7 +51,12 @@ export const MainSection = () => {
                 tooltip={item.title}
                 asChild
                 isActive={false} // TODO: Change to look at the current pathname
-                onClick={() => { }} // TODO: Do something onClick
+                onClick={(e) => {
+                  if (!isSignedIn && item.auth) {
+                    e.preventDefault()
+                    return clerk.openSignIn()
+                  }
+                }}
               >
                 <Link href={item.href} className="flex items-center gap-4">
                   <item.icon />
