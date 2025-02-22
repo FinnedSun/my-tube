@@ -23,7 +23,7 @@ type WebhookEvent =
 
 export const POST = async (request: Request) => {
   if (!SIGNING_SECRET) {
-    return new Error("MUX_WEBHOOK_SECRET is not set");
+    return new Response("MUX_WEBHOOK_SECRET is not set", { status: 500 });
   }
 
   const headersPlayList = await headers();
