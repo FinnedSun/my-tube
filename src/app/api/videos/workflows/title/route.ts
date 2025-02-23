@@ -53,11 +53,11 @@ export const { POST } = serve(
     const { body } = await context.api.openai.call(
       "generate-title",
       {
-        baseURL: "https://gpt.kewangan.site",
+        // baseURL: "https://gpt.kewangan.site",
         token: process.env.OPENAI_API_KEY!,
         operation: "chat.completions.create",
         body: {
-          model: "gpt-3.5-turbo",
+          model: "gpt-4o",
           messages: [
             {
               role: "system",

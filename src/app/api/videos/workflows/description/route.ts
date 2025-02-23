@@ -51,11 +51,11 @@ export const { POST } = serve(
     const { body } = await context.api.openai.call(
       "generate-description",
       {
-        baseURL: "https://api.deepseek.com",
-        token: process.env.DEEPSEEK_API_KEY!,
+        // baseURL: "https://api.deepseek.com",
+        token: process.env.OPENAI_API_KEY!,
         operation: "chat.completions.create",
         body: {
-          model: "deepseek-chat",
+          model: "gpt-4o",
           messages: [
             {
               role: "system",
