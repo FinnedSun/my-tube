@@ -198,7 +198,7 @@ const FormSectionSuspanse = ({
     update.mutateAsync(data)
   }
 
-  const fullUrl = `${process.env.VERCEL_URL || "http://localhost:3000" || process.env.NEXT_PUBLIC_APP_URL}/videos/${video.id}`
+  const fullUrl = `${process.env.VERCEL_URL || "http://localhost:3000" || process.env.NEXT_PUBLIC_APP_URL}/videos/${videoId}`
   const [isCopy, setIsCopy] = useState(false)
 
   const onCopy = async () => {

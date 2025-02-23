@@ -5,6 +5,7 @@ import {
   ClerkProvider,
 } from '@clerk/nextjs'
 import { TRPCProvider } from "@/trpc/client";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -40,6 +41,7 @@ export default function RootLayout({
           className={`${inter.className}`}
         >
           <TRPCProvider>
+            <Toaster />
             {children}
           </TRPCProvider>
         </body>
