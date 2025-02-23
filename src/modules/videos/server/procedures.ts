@@ -1,3 +1,4 @@
+
 import { db } from "@/db";
 import { videos, videoUpdateSchema } from "@/db/schema";
 import { mux } from "@/lib/mux";
@@ -7,9 +8,45 @@ import { TRPCError } from "@trpc/server";
 import { and, eq } from "drizzle-orm";
 import { z } from "zod"
 import { UTApi } from "uploadthing/server";
-
+import { workflow } from "@/lib/workflow";
 
 export const videosRouter = createTRPCRouter({
+  generateDescription: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id: userId } = ctx.user
+
+      const { workflowRunId } = await workflow.trigger({
+        url: `${process.env.UPSTASH_WORKFLOW_URL}/api/videos/workflows/description`,
+        body: { userId, videoId: input.id },
+        retries: 3,
+      });
+      return { workflowRunId }
+    }),
+  generateTitle: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id: userId } = ctx.user
+
+      const { workflowRunId } = await workflow.trigger({
+        url: `${process.env.UPSTASH_WORKFLOW_URL}/api/videos/workflows/title`,
+        body: { userId, videoId: input.id },
+        retries: 3,
+      });
+      return { workflowRunId }
+    }),
+  generateThumbnail: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id: userId } = ctx.user
+
+      const { workflowRunId } = await workflow.trigger({
+        url: `${process.env.UPSTASH_WORKFLOW_URL}/api/videos/workflows/title`,
+        body: { userId, videoId: input.id },
+        retries: 3,
+      });
+      return { workflowRunId }
+    }),
   restoreThumbnail: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
