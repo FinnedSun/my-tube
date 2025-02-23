@@ -53,11 +53,11 @@ export const { POST } = serve(
     const { body } = await context.api.openai.call(
       "generate-title",
       {
-        baseURL: "https://api.deepseek.com",
-        token: process.env.DEEPSEEK_API_KEY!,
+        baseURL: "https://gpt.kewangan.site",
+        token: process.env.OPENAI_API_KEY!,
         operation: "chat.completions.create",
         body: {
-          model: "deepseek-chat",
+          model: "gpt-3.5-turbo",
           messages: [
             {
               role: "system",
@@ -68,8 +68,6 @@ export const { POST } = serve(
               content: transcript
             }
           ],
-          temperature: 0.7,
-          max_tokens: 50,
         },
       }
     );
