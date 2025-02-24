@@ -1,8 +1,10 @@
+
 import { relations } from "drizzle-orm";
 import {
   integer,
   pgEnum,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   uniqueIndex,
@@ -25,7 +27,8 @@ export const users = pgTable("users", {
 }, (t) => [uniqueIndex("clerk_id_idx").on(t.clerkId)])
 
 export const userRelations = relations(users, ({ many }) => ({
-  videos: many(videos)
+  videos: many(videos),
+  videoViews: many(videoViews)
 }))
 
 export const categories = pgTable("categories", {
@@ -75,7 +78,7 @@ export const videoInsertSchema = createInsertSchema(videos)
 export const videoSelectSchema = createSelectSchema(videos)
 export const videoUpdateSchema = createUpdateSchema(videos)
 
-export const videoReactions = relations(videos, ({ one }) => ({
+export const videoRelations = relations(videos, ({ one, many }) => ({
   user: one(users, {
     fields: [videos.userId],
     references: [users.id],
@@ -83,5 +86,37 @@ export const videoReactions = relations(videos, ({ one }) => ({
   category: one(categories, {
     fields: [videos.categoryId],
     references: [categories.id],
+  }),
+  views: many(videoViews)
+}))
+
+export const videoViews = pgTable("video_views", {
+  userId: uuid("user_id").references(() => users.id, {
+    onDelete: "cascade",
+  }).notNull().notNull(),
+  videoId: uuid("video_id").references(() => videos.id, {
+    onDelete: "cascade",
+  }).notNull().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (t) => [
+  primaryKey({
+    name: "video_views_pk",
+    columns: [t.userId, t.videoId],
+  })
+])
+
+export const videoViewsRelations = relations(videoViews, ({ one }) => ({
+  user: one(users, {
+    fields: [videoViews.userId],
+    references: [users.id],
+  }),
+  video: one(videos, {
+    fields: [videoViews.videoId],
+    references: [videos.id],
   })
 }))
+
+export const videoViewsSelectSchema = createSelectSchema(videoViews)
+export const videoViewsInsertSchema = createInsertSchema(videoViews)
+export const videoViewsUpdateSchema = createUpdateSchema(videoViews)
