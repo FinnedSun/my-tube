@@ -10,6 +10,7 @@ import {
   uniqueIndex,
   uuid
 } from "drizzle-orm/pg-core";
+import { view } from "drizzle-orm/sqlite-core";
 import {
   createInsertSchema,
   createSelectSchema,
@@ -29,7 +30,32 @@ export const users = pgTable("users", {
 export const userRelations = relations(users, ({ many }) => ({
   videos: many(videos),
   videoViews: many(videoViews),
-  videoReactions: many(videoReactions)
+  videoReactions: many(videoReactions),
+  subscriptions: many(subscriptions),
+  subscribers: many(subscriptions),
+}))
+
+
+export const subscriptions = pgTable("subscriptions", {
+  viewerId: uuid("viewer_id").references(() => users.id, {
+    onDelete: "cascade",
+  }).notNull(),
+  creatorId: uuid("creator_id").references(() => users.id, {
+    onDelete: "cascade",
+  }).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+})
+
+export const subscriptionRelations = relations(subscriptions, ({ one }) => ({
+  viewerId: one(users, {
+    fields: [subscriptions.viewerId],
+    references: [users.id],
+  }),
+  creatorId: one(users, {
+    fields: [subscriptions.creatorId],
+    references: [users.id],
+  })
 }))
 
 export const categories = pgTable("categories", {
