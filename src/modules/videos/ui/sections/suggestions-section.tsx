@@ -1,7 +1,51 @@
-import React from 'react'
+"use client"
 
-export const SuggestionsSection = () => {
+import { DEFAULT_LIMIT } from "@/constants"
+import { trpc } from "@/trpc/client"
+import { VideoRowCard } from "../component/video-row-card"
+import { VideoGridCard } from "../component/video-grid-card"
+import { InfiniteScroll } from "@/components/infinite-scroll"
+
+interface SuggestionsSectionProps {
+  videoId: string
+  isManual?: boolean
+}
+
+export const SuggestionsSection = ({
+  videoId,
+  isManual,
+}: SuggestionsSectionProps) => {
+  const [suggestions, query] = trpc.suggestions.getMany.useSuspenseInfiniteQuery({
+    videoId,
+    limit: DEFAULT_LIMIT,
+  }, {
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  })
   return (
-    <div>SuggestionsSection</div>
+    <>
+      <div className="hidden md:block space-y-3">
+        {suggestions.pages.flatMap((page) => page.items.map((video) => (
+          <VideoRowCard
+            key={video.id}
+            data={video}
+            size={"compact"}
+          />
+        )))}
+      </div>
+      <div className="block md:hidden space-y-10">
+        {suggestions.pages.flatMap((page) => page.items.map((video) => (
+          <VideoGridCard
+            key={video.id}
+            data={video}
+          />
+        )))}
+      </div>
+      <InfiniteScroll
+        isManual={isManual}
+        hasNextPage={query.hasNextPage}
+        isFetchingNextPage={query.isFetchingNextPage}
+        fetchNextPage={query.fetchNextPage}
+      />
+    </>
   )
 }
