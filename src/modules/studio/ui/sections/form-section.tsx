@@ -160,6 +160,17 @@ const FormSectionSuspanse = ({
     }
   })
 
+  const revalidate = trpc.videos.revalidate.useMutation({
+    onSuccess: () => {
+      utils.studio.getMany.invalidate()
+      utils.studio.getOne.invalidate({ id: videoId })
+      toast.success("Video revalidated")
+    },
+    onError: () => {
+      toast.error("Something went wrong")
+    }
+  })
+
   const generateTitle = trpc.videos.generateTitle.useMutation({
     onSuccess: () => {
       toast.success("Background job started", { description: "This may take some time" })
@@ -240,6 +251,10 @@ const FormSectionSuspanse = ({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" >
+                  <DropdownMenuItem onClick={() => revalidate.mutate({ id: video.id })}>
+                    <RotateCcwIcon className="size-4 mr-2" />
+                    Revalidate
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => remove.mutate({ id: video.id })}>
                     <TrashIcon className="size-4 mr-2" />
                     Delete

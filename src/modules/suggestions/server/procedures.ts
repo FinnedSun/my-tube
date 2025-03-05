@@ -2,7 +2,7 @@ import { db } from "@/db";
 import { users, videoReactions, videos, videoViews } from "@/db/schema";
 import { createTRPCRouter, baseProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { and, desc, eq, getTableColumns, lt, or } from "drizzle-orm";
+import { and, desc, eq, getTableColumns, lt, not, or } from "drizzle-orm";
 
 import { z } from "zod";
 
@@ -56,6 +56,8 @@ export const suggestionsRouter = createTRPCRouter({
         .from(videos)
         .innerJoin(users, eq(videos.userId, users.id))
         .where(and(
+          not(eq(videos.id, exsistingVideo.id)),
+          eq(videos.visibility, "public"),
           exsistingVideo.categoryId
             ? eq(videos.categoryId, exsistingVideo.categoryId)
             : undefined,
