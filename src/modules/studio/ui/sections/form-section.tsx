@@ -54,6 +54,7 @@ import Image from "next/image"
 import { THUMBNAIL_FALL } from "@/modules/videos/constants"
 import { ThumbnailUploadModal } from "../components/thumbnail-upload-modal"
 import { ThumbnailGenerateModal } from "../components/thumbnail-generate-modal"
+import { APP_URL } from "@/constants"
 
 interface FormSectionProps {
   videoId: string
@@ -209,7 +210,7 @@ const FormSectionSuspanse = ({
     update.mutateAsync(data)
   }
 
-  const fullUrl = `${process.env.VERCEL_URL || "http://localhost:3000" || process.env.NEXT_PUBLIC_APP_URL}/videos/${videoId}`
+  const fullUrl = `${APP_URL}/videos/${videoId}`
   const [isCopy, setIsCopy] = useState(false)
 
   const onCopy = async () => {
