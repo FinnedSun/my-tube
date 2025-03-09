@@ -74,7 +74,7 @@ export const PlaylistCreateModal = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Pormt
+                  Name
                 </FormLabel>
                 <FormControl>
                   <Input

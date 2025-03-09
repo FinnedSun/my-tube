@@ -153,13 +153,13 @@ const VideosSectionSuspense = () => {
                     }
                   </TableCell>
                   <TableCell className="text-right text-sm">
-                    views
+                    {video.viewCount}
                   </TableCell>
                   <TableCell className="text-right text-sm">
-                    comments
+                    {video.commentCount}
                   </TableCell>
                   <TableCell className="text-right text-sm pr-6">
-                    likes
+                    {video.likeCount}
                   </TableCell>
                 </TableRow>
               </Link>
