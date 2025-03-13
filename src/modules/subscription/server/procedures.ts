@@ -35,6 +35,7 @@ export const subscriptionsRouter = createTRPCRouter({
       if (userId === ctx.user.id) {
         throw new TRPCError({
           code: "BAD_REQUEST",
+          message: "You cannot unsubscribe from yourself",
         })
       }
 

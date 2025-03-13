@@ -135,7 +135,7 @@ export const VideoRowCard = ({
             </h3>
             {size === "default" && (
               <p className="text-xs text-muted-foreground mt-1">
-                {compactViwes} views • {compactLikes} likes
+                {compactViwes} views &bull; {compactLikes} likes
               </p>
             )}
             {size === "default" && (
@@ -175,7 +175,7 @@ export const VideoRowCard = ({
             )}
             {size === "compact" && (
               <p className="text-xs text-muted-foreground mt-1">
-                {compactViwes} views • {compactLikes} likes
+                {compactViwes} views &bull; {compactLikes} likes
               </p>
             )}
           </Link>
