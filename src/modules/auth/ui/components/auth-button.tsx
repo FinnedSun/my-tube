@@ -18,7 +18,7 @@ export const AuthButton = () => {
           <UserButton.MenuItems>
             <UserButton.Link
               href='/users/current'
-              label='Studio'
+              label='My Profile'
               labelIcon={<UserIcon className='size-4' />}
             />
             <UserButton.Link
