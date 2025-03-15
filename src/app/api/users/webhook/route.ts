@@ -63,9 +63,13 @@ export async function POST(req: Request) {
     else if (!data.last_name) {
       name = data.first_name
     }
-    else {
+    else if (data.first_name && data.last_name) {
       name = `${data.first_name} ${data.last_name}`
     }
+    else {
+      name = data.email_addresses[0].email_address
+    }
+
 
     await db.insert(users).values({
       clerkId: data.id,
