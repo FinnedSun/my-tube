@@ -55,7 +55,18 @@ export async function POST(req: Request) {
   if (eventType === "user.created") {
     const { data } = evt
 
-    const name = !data.first_name ? data.email_addresses[0].email_address : `${data.first_name} ${data.last_name}`
+    let name
+
+    if (!data.first_name) {
+      name = data.email_addresses[0].email_address
+    }
+    else if (!data.last_name) {
+      name = data.first_name
+    }
+    else {
+      name = `${data.first_name} ${data.last_name}`
+    }
+
     await db.insert(users).values({
       clerkId: data.id,
       name: name,
