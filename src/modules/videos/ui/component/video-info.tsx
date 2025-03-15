@@ -35,7 +35,7 @@ export const VideoInfo = ({
   }, [data.viewCount])
   const compactDate = useMemo(() => {
     return formatDistanceToNow(data.createdAt, { addSuffix: true })
-  }, [data.likeCount])
+  }, [data.createdAt])
   return (
     <div className="flex gap-3">
       <Link href={`/users/${data.user.id}`}>

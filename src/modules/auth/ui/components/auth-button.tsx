@@ -11,7 +11,6 @@ import {
 
 
 export const AuthButton = () => {
-  // TODO: Add diffrent auth states
   return (
     <>
       <SignedIn>

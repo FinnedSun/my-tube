@@ -64,7 +64,7 @@ export const PersonalSection = () => {
                     e.preventDefault()
                     return clerk.openSignIn()
                   }
-                }} // TODO: Do something onClick
+                }}
               >
                 <Link href={item.href} className="flex items-center gap-4">
                   <item.icon />
