@@ -13,7 +13,7 @@ interface SearchPageProps {
 
 export async function generateMetadata({ searchParams }: SearchPageProps) {
 
-  const { query, categoryId } = await searchParams;
+  const { query } = await searchParams;
 
   return {
     title: query || 'Search',
