@@ -11,6 +11,18 @@ interface PlaylistIdPageProps {
   }>;
 }
 
+export async function generateMetadata({ params }: PlaylistIdPageProps) {
+  const { playlistId } = await params
+
+
+  const playlist = await trpc.playlists.getOne({ id: playlistId });
+
+  return {
+    title: playlist.name,
+    description: playlist.description,
+  };
+}
+
 const PlaylistIdPage = async ({
   params,
 }: PlaylistIdPageProps) => {

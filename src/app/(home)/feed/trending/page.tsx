@@ -4,6 +4,9 @@ import { HydrateClient, trpc } from "@/trpc/server";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: 'Trending',
+}
 
 const Page = async () => {
 

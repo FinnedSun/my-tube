@@ -8,10 +8,12 @@ import { VideoPlayer, VideoPlayerSkeleton } from "../component/video-player"
 import { VideoBanner } from "../component/video-banner"
 import { VideoTopRow, VideoTopRowSkeleton } from "../component/video-top-row"
 import { useAuth } from "@clerk/nextjs"
+import { Metadata } from "next"
 
 interface VideoSectionProps {
   videoId: string
 }
+
 
 export const VideoSection = ({ videoId }: VideoSectionProps) => {
   return (

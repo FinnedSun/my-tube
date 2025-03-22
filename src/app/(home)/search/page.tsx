@@ -11,6 +11,16 @@ interface SearchPageProps {
   }>
 }
 
+export async function generateMetadata({ searchParams }: SearchPageProps) {
+
+  const { query, categoryId } = await searchParams;
+
+  return {
+    title: query || 'Search',
+  };
+}
+
+
 const SearchPage = async ({
   searchParams,
 }: SearchPageProps) => {

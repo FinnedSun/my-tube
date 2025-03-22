@@ -4,6 +4,10 @@ import { HydrateClient, trpc } from "@/trpc/server"
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: 'All subscriptions',
+}
+
 const SubscriptionsPage = async () => {
   void trpc.subscriptions.getMany.prefetchInfinite({
     limit: DEFAULT_LIMIT

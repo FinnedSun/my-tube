@@ -5,6 +5,10 @@ import React from 'react'
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: 'liked',
+}
+
 const PlaylistsPage = async () => {
   void trpc.playlists.getMany.prefetchInfinite({
     limit: DEFAULT_LIMIT

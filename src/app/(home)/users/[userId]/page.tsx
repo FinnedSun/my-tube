@@ -8,6 +8,17 @@ interface PageProps {
   params: Promise<{ userId: string }>
 }
 
+export async function generateMetadata({ params }: PageProps) {
+  const { userId } = await params
+
+
+  const users = await trpc.users.getOne({ id: userId });
+
+  return {
+    title: users.name,
+  };
+}
+
 const UserIdPage = async ({ params }: PageProps) => {
   const { userId } = await params
 
