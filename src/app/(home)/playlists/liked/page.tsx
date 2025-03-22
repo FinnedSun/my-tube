@@ -4,6 +4,10 @@ import { HydrateClient, trpc } from "@/trpc/server";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: 'Liked',
+}
+
 const LikedPage = async () => {
   void trpc.playlists.getLiked.prefetchInfinite({
     limit: DEFAULT_LIMIT,
