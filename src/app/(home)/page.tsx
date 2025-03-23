@@ -9,6 +9,27 @@ interface PageProps {
   }>
 }
 
+export async function generateMetadata({ searchParams }: PageProps) {
+  const { categoryId } = await searchParams;
+
+  if (!categoryId) {
+    return {
+      title: "Home",
+    };
+  }
+
+  try {
+    const category = await trpc.categories.getOne({ id: categoryId });
+    return {
+      title: `${category.name}`,
+    };
+  } catch {
+    return {
+      title: "Home",
+    };
+  }
+}
+
 const Page = async ({ searchParams }: PageProps) => {
   const { categoryId } = await searchParams;
 
