@@ -134,7 +134,15 @@ const FormSectionSuspanse = ({
 }: FormSectionProps) => {
   const router = useRouter()
   const utils = trpc.useUtils()
-  const [video] = trpc.studio.getOne.useSuspenseQuery({ id: videoId })
+  const [video, { refetch }] = trpc.studio.getOne.useSuspenseQuery(
+    { id: videoId },
+    {
+      refetchInterval: 30000, // Single refetch after 15 seconds
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false
+    }
+  )
   const [categories] = trpc.categories.getMany.useSuspenseQuery()
   const [tumbnailModelOpen, setThumbnailModelOpen] = useState(false)
   const [tumbnailGenerateModelOpen, setThumbnailGenerateModelOpen] = useState(false)
@@ -161,10 +169,12 @@ const FormSectionSuspanse = ({
     }
   })
 
+  // In revalidate mutation:
   const revalidate = trpc.videos.revalidate.useMutation({
     onSuccess: () => {
       utils.studio.getMany.invalidate()
       utils.studio.getOne.invalidate({ id: videoId })
+      refetch() // Force immediate refresh
       toast.success("Video revalidated")
     },
     onError: () => {
