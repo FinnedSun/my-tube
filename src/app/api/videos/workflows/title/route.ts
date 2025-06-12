@@ -2,6 +2,7 @@ import { db } from "@/db"
 import { videos } from "@/db/schema"
 import { serve } from "@upstash/workflow/nextjs"
 import { and, eq } from "drizzle-orm"
+import { GoogleGenAI } from "@google/genai";
 
 interface InputType {
   userId: string
@@ -50,11 +51,9 @@ export const { POST } = serve(
     });
 
 
-    const { body } = await context.api.openai.call(
-      "generate-title",
+    const { body } = await context.api.openai.call("generate-title",
       {
-        // baseURL: "https://gpt.kewangan.site",
-        token: process.env.OPENAI_API_KEY!,
+        token: process.env.GEMINI_API_KEY!,
         operation: "chat.completions.create",
         body: {
           model: "gpt-4o",
@@ -71,6 +70,24 @@ export const { POST } = serve(
         },
       }
     );
+
+    // const genAI = new GoogleGenAI({
+    //   apiKey: process.env.GEMINI_API_KEY!,
+    // });
+
+
+
+    // const result = await genAI.models.generateContent([
+    //   {
+    //     role: "user",
+    //     parts: [
+    //       { text: TITLE_SYSTEM_PROMPT },
+    //       { text: transcript }
+    //     ]
+    //   }
+    // ]);
+
+    // const title = result.response.text();
 
     const title = body.choices[0]?.message?.content;
 
@@ -94,3 +111,4 @@ export const { POST } = serve(
     })
   }
 )
+
