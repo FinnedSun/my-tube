@@ -483,7 +483,7 @@ const FormSectionSuspanse = ({
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value ?? undefined}
+                      defaultValue={field.value ? String(field.value) : undefined}
                     >
                       <FormControl>
                         <SelectTrigger>
