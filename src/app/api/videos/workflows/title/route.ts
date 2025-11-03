@@ -2,7 +2,7 @@ import { db } from "@/db"
 import { videos } from "@/db/schema"
 import { serve } from "@upstash/workflow/nextjs"
 import { and, eq } from "drizzle-orm"
-import { GoogleGenAI } from "@google/genai";
+// import { GoogleGenAI } from "@google/genai";
 
 interface InputType {
   userId: string

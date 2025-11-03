@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev:all": "concurrently \"bun run dev\" \"bun run dev:webhook\"",
-    "dev:webhook": "ngrok http --url=deep-brave-caribou.ngrok-free.app 3000",
+    "dev:webhook": "ngrok http --url=overplenteous-brooks-superornamentally.ngrok-free.app 3000",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
