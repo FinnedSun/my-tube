@@ -29,7 +29,7 @@ const items = [
     auth: true,
   },
   {
-    title: "Tredding",
+    title: "Trending",
     href: "/feed/trending",
     icon: FlameIcon,
   },
