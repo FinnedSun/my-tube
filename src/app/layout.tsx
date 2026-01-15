@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - Vurro',
-    default: 'Vurro', // a default is required when creating a template
+    template: '%s - discominfo',
+    default: 'discominfo', // a default is required when creating a template
   },
   description: "Share and discover videos. Watch your favorite content, upload original videos, and share it all with friends, family, and the world.",
 };
