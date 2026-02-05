@@ -53,10 +53,10 @@ export const { POST } = serve(
 
     const { body } = await context.api.openai.call("generate-title",
       {
-        token: process.env.GEMINI_API_KEY!,
+        token: process.env.OPENAI_API_KEY!,
         operation: "chat.completions.create",
         body: {
-          model: "gpt-4o",
+          model: "gpt-5",
           messages: [
             {
               role: "system",
@@ -89,7 +89,7 @@ export const { POST } = serve(
 
     // const title = result.response.text();
 
-    const title = body.choices[0]?.message?.content;
+    const title = body.choices[0].message?.content;
 
     if (!title) {
       throw new Error("Failed to generate title")
